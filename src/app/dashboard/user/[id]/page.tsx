@@ -9,9 +9,9 @@ type Props = {
   };
 };
 
-const ProfilePage = async (props: Props) => {
+const ProfilePage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
-  const response = await fetch(Backend_URL + `/user/${props.params.id}`, {
+  const response = await fetch(Backend_URL + `/user/${params.id}`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${session?.backendTokens.accessToken}`,

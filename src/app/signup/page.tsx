@@ -6,6 +6,7 @@ import InputBox from '../../components/InputBox';
 import { Backend_URL } from '@/lib/Constants';
 import Link from 'next/link';
 import { useRef } from 'react';
+import sessionService from '@/services/session-service';
 
 type FormInputs = {
   name: string;
@@ -14,34 +15,14 @@ type FormInputs = {
 };
 
 const SignupPage = () => {
-  const register = async () => {
-    const res = await fetch(Backend_URL + '/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: data.current.name,
-        email: data.current.email,
-        password: data.current.password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!res.ok) {
-      window.alert(res.statusText);
-      return;
-    }
-    const response = await res.json();
-    window.alert('User Registered!');
-    console.log({ response });
-  };
+  const register = () =>
+    sessionService.register(data.current.name, data.current.email, data.current.password);
 
   const data = useRef<FormInputs>({
     name: '',
     email: '',
     password: '',
   });
-
-  console.log(data.current);
 
   return (
     <div className="m-2 overflow-hidden rounded border shadow">

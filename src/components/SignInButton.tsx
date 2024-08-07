@@ -9,8 +9,11 @@ const SignInButton = () => {
   if (session && session.user)
     return (
       <div className="ml-auto flex gap-4">
-        <p className="text-sky-600">{session.user.email}</p>
-        <Link href={'/api/auth/signout'} className="ml-auto flex gap-4 text-red-600">
+        <p className="text-sm font-semibold leading-6 text-sky-600">Hello, {session.user.email}</p>
+        <Link
+          href={'/api/auth/signout'}
+          className="ml-auto text-sm font-semibold leading-6 text-red-600"
+        >
           Sign Out
         </Link>
       </div>
@@ -18,14 +21,14 @@ const SignInButton = () => {
 
   return (
     <div className="ml-auto flex items-center gap-4">
+      <Link href={'/signup'} className="ml-auto text-sm font-semibold leading-6">
+        Sign Up
+      </Link>
       <Link
         href={'/api/auth/signin'} //this is handled by nextauth
-        className="ml-auto flex gap-4 text-green-600"
+        className="ml-auto text-sm font-semibold leading-6"
       >
-        Sign In
-      </Link>
-      <Link href={'/signup'} className="ml-auto flex gap-4 rounded bg-green-600 p-2 text-green-200">
-        Sign Up
+        Log In <span aria-hidden="true">&rarr;</span>
       </Link>
     </div>
   );

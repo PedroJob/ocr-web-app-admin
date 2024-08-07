@@ -1,4 +1,5 @@
 import { Backend_URL } from '@/lib/Constants';
+import sessionService from '@/services/session-service';
 import { NextAuthOptions } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import NextAuth from 'next-auth/next';
@@ -36,23 +37,13 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
         const { email, password } = credentials;
-        const res = await fetch(Backend_URL + '/auth/login', {
-          method: 'POST',
-          body: JSON.stringify({
-            userEmail: email,
-            userPassword: password,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const res = await sessionService.login(email, password);
         if (res.status == 401) {
           console.log(res.statusText);
 
           return null;
         }
-        const user = await res.json();
-        return user;
+        return res;
       },
     }),
   ],
